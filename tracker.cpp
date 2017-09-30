@@ -17,9 +17,9 @@ using namespace std;
 
 // Specifying minimum and maximum size parameters
 #define MIN_FACE_SIZE 24
-#define MAX_FACE_SIZE 120
+#define MAX_FACE_SIZE 100
 
-#define SKIPFRAME 5
+#define SKIPFRAME 30
 #define RATIO 1
 
 
@@ -89,7 +89,7 @@ int main(int argc, char **argv)
             dlib::cv_image<dlib::bgr_pixel> cframeBig(frameBig);
 
             // Detect faces
-            faceCascade.detectMultiScale(frame, faces, 1.1, 5, 0, Size(MIN_FACE_SIZE, MIN_FACE_SIZE), Size(MAX_FACE_SIZE, MAX_FACE_SIZE* 0.5));
+            faceCascade.detectMultiScale(frame, faces, 1.1, 5, 0, Size(MIN_FACE_SIZE, MIN_FACE_SIZE), Size(MAX_FACE_SIZE, MAX_FACE_SIZE));
 
             contframe++;
             if(contframe > SKIPFRAME)
@@ -114,27 +114,27 @@ int main(int argc, char **argv)
 
                     }
 
-                    if(i==1)
-                    {
-                        bbox_1 = faceRect;
-                        tracker_1 = Tracker::create(trackerType);
-                        tracker_1->init(frame, bbox_1);
-                        ok_1=tracker_1->update(frame, bbox_1);
+//                    if(i==1)
+//                    {
+//                        bbox_1 = faceRect;
+//                        tracker_1 = Tracker::create(trackerType);
+//                        tracker_1->init(frame, bbox_1);
+//                        ok_1=tracker_1->update(frame, bbox_1);
 
-                    }
+//                    }
 
                 }
             }
 
             if(ok_0 )
             {
-                 tracker_0->update(frame, bbox_0);
+                  tracker_0->update(frame, bbox_0);
                   rectangle(frame,bbox_0, Scalar(128, 255, 0), 2);
+
             }
             if(ok_1 )
             {
                     tracker_1->update(frame, bbox_1);
-
                     rectangle(frame,bbox_1, Scalar(128, 255, 0), 2);
             }
             imshow("tracking", frame);
